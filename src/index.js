@@ -1,34 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Item from './components/Item.js';
 import './index.css';
 
 class Hello extends React.Component{
 	constructor(){
 		super();
-
+		this.deleteName = this.deleteName.bind(this);
 		this.state= {
 			names: ["Dinesh", "Diksha", "Ketan"]
 		};
 	}
+
+	deleteName(index){
+		let names = this.state.names;
+		names.splice(index,1);
+		//console.log(this.state.names[index]);
+		this.setState({
+			names:names
+		});
+	}
 	render(){
 		return(
-			<div>
+			<ul>
 				{
-					this.state.names.map(function(name){
-						return <Item key={name} firstName={name}/>
+					this.state.names.map((name, index)=>{
+						return <Item key={name} deleteHandler={this.deleteName} index={index} firstName={name}/>
 					})
 				}
 				
-			</div>
+			</ul>
 			
-		)
-	}
-}
-
-class Item extends React.Component{
-	render(){
-		return(
-			<h2>{this.props.firstName}</h2>
 		)
 	}
 }
