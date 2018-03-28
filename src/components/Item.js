@@ -2,12 +2,17 @@ import React from 'react';
 
 const Item = (props)=>{
 	return (
-		<li>
-			{props.firstName} 	 
-			<button onClick={()=>{
-					props.deleteHandler(props.index);
-				}}>Delete
-			</button>
+		<li className={props.item.done?'done':''}>
+			<input type="checkbox" defaultChecked={props.item.done} onChange={()=>{
+				props.doneHandler(props.index);
+			}}/>
+			<p className="item-title">{props.item.title}</p>
+			<div className="buttons">
+				<button onClick={()=>{
+						props.deleteHandler(props.index);
+					}}>Delete
+				</button>
+			</div>
 		</li>
 		);
 }
