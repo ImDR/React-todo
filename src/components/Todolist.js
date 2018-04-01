@@ -9,6 +9,7 @@ class Todolist extends React.Component{
 		this.addItem = this.addItem.bind(this);
 		this.changeTempTitle = this.changeTempTitle.bind(this);
 		this.doneHandler = this.doneHandler.bind(this);
+		this.editHandler = this.editHandler.bind(this);
 		this.state= {
 			items: [{
 				title: "hello",
@@ -21,6 +22,15 @@ class Todolist extends React.Component{
 			],
 			tempTitle: ''
 		};
+	}
+
+	editHandler(value, index){
+		
+		let items = this.state.items;
+		items[index].title = value;
+		this.setState({
+			items:items
+		});
 	}
 
 	deleteItem(index){
@@ -76,7 +86,7 @@ class Todolist extends React.Component{
 				<ul className="todo-list">
 					{
 						this.state.items.map((item, index)=>{
-							return <Item key={index} doneHandler={this.doneHandler} deleteHandler={this.deleteItem} index={index} item={item}/>
+							return <Item key={index} editHandler={this.editHandler} doneHandler={this.doneHandler} deleteHandler={this.deleteItem} index={index} item={item}/>
 						})
 					}
 					

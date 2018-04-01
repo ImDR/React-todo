@@ -23,8 +23,9 @@ div.todo{
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
-div.todo h2{
-	padding: 10px;
+div.todo h2 {
+    padding: 10px;
+    text-align: center;
 }
 
 ul.todo-list{
@@ -78,6 +79,7 @@ button{
     z-index: 1;
     -webkit-transition: .3s ease-out;
     transition: .3s ease-out;
+    margin-left: 2px;
 }
 
 button:hover{
