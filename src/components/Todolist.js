@@ -5,11 +5,7 @@ import Itemform from './Itemform';
 class Todolist extends React.Component{
 	constructor(){
 		super();
-		this.deleteItem = this.deleteItem.bind(this);
-		this.addItem = this.addItem.bind(this);
-		this.changeTempTitle = this.changeTempTitle.bind(this);
-		this.doneHandler = this.doneHandler.bind(this);
-		this.editHandler = this.editHandler.bind(this);
+		
 		this.state= {
 			items: [{
 				title: "hello",
@@ -19,12 +15,22 @@ class Todolist extends React.Component{
 				title: "hello1",
 				done: false
 			}
-			],
-			tempTitle: ''
+			]
 		};
 	}
 
-	editHandler(value, index){
+	addItem(value){
+		let items = this.state.items;
+		items.push({
+			title: value,
+			done: false
+		});
+		this.setState({
+			items:items
+		});
+	}
+
+	editItem(value, index){
 		
 		let items = this.state.items;
 		items[index].title = value;
@@ -34,41 +40,18 @@ class Todolist extends React.Component{
 	}
 
 	deleteItem(index){
-		let items = this.state.items;
-		items.splice(index,1);
-		
-		this.setState({
-			items:items
-		});
-		
-		
-	}
-
-	addItem(evt){
-		evt.preventDefault();
-
-		if(this.state.tempTitle!==''){
+		if(window.confirm('Do you want to delete?')){
 			let items = this.state.items;
-			items.push({
-				title: this.state.tempTitle,
-				done: false
-			});
+			items.splice(index,1);
+			
 			this.setState({
-				items:items,
-				tempTitle:''
+				items:items
 			});
 		}
-
 		
 	}
 
-	changeTempTitle(evt){
-		this.setState({
-			tempTitle: evt.target.value
-		});
-	}
-
-	doneHandler(index){
+	doneItem(index){
 		let items = this.state.items;
 		
 		items[index].done = !items[index].done;
@@ -86,15 +69,12 @@ class Todolist extends React.Component{
 				<ul className="todo-list">
 					{
 						this.state.items.map((item, index)=>{
-							return <Item key={index} editHandler={this.editHandler} doneHandler={this.doneHandler} deleteHandler={this.deleteItem} index={index} item={item}/>
+							return <Item key={index} editHandler={this.editItem.bind(this)} doneHandler={this.doneItem.bind(this)} deleteHandler={this.deleteItem.bind(this)} index={index} item={item}/>
 						})
 					}
 					
 				</ul>
-				<Itemform 
-				changeTempTitle={this.changeTempTitle} 
-				tempTitle={this.state.tempTitle} 
-				addItemHandler={this.addItem}/>
+				<Itemform addItemHandler={this.addItem.bind(this)}/>
 			</div>
 		)
 	}

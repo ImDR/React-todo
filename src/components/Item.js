@@ -26,23 +26,19 @@ class Item extends React.Component{
 		this.state = {
 			editing: false
 		};
-
-		this.editHandler = this.editHandler.bind(this);
-		this.submitHandler = this.submitHandler.bind(this);
 	}
 
-	editHandler(){
+	editToggle(){
 		this.setState({
 			editing: !this.state.editing
 		});
 	}
 
-	submitHandler(evt){
+	submitEditForm(evt){
 		evt.preventDefault();
-		//console.log(this.edit.value);
-		if(this.edit.value!==''){
-			this.props.editHandler(this.edit.value, this.props.index);
-			this.editHandler();
+		if(this.refs.editValue.value!==''){
+			this.props.editHandler(this.refs.editValue.value, this.props.index);
+			this.editToggle();
 		}
 	}
 	render(){
@@ -50,9 +46,9 @@ class Item extends React.Component{
 			<div>
 			{(this.state.editing)?
 				<li>
-					<form onSubmit={this.submitHandler}>
+					<form onSubmit={this.submitEditForm.bind(this)}>
 						<input 
-						ref={(node)=>{ this.edit = node}}
+						ref="editValue"
 						defaultValue={this.props.item.title}  
 						type="text"/>
 						<button type="submit">Save</button>
@@ -66,7 +62,7 @@ class Item extends React.Component{
 					}}/>
 					<p className="item-title">{this.props.item.title}</p>
 					<div className="buttons">
-						<button onClick={this.editHandler}>Edit
+						<button onClick={this.editToggle.bind(this)}>Edit
 						</button>
 						<button onClick={()=>{
 								this.props.deleteHandler(this.props.index);
